@@ -1,0 +1,7 @@
+---
+# Location of the Jenkins CasC configuration file.
+# This can also be a directory which will then copy all of the file
+jenkins_casc_config_file: jenkins.yaml
+
+# Jenkins home directory. Role will create a folder called casc_configs here.
+jenkins_casc_jenkins_home: /var/lib/jenkins

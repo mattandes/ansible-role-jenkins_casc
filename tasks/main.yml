@@ -1,0 +1,26 @@
+---
+- name: Include OS-Specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Ensure JCasC directory exists
+  file:
+    name: "{{ jenkins_casc_jenkins_home }}/casc_configs"
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: 0755
+
+- name: Copy JCasC configuration file to the system
+  copy:
+    dest: "{{ jenkins_casc_jenkins_home }}/casc_configs/"
+    src: "{{ jenkins_casc_config_file }}"
+    owner: jenkins
+    group: jenkins
+    mode: 0644
+  notify: Restart Jenkins
+
+- name: Add CASC_JENKINS_CONFIG environment variable to Jenkins init file
+  lineinfile:
+    dest: "{{ jenkins_casc_jenkins_init_file }}"
+    regexp: '^export CASC_JENKINS_CONFIG='
+    line: "export CASC_JENKINS_CONFIG={{ jenkins_casc_jenkins_home }}/casc_configs/"
