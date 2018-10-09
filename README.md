@@ -20,6 +20,15 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Tells the role the location of the JCasC config file to deploy to the Jenkins server. Defaults to the provided `jenkins.yaml` in the files directory of this role. This variable can also be set to a directory which will then copy all files in it to the server.
 
+    jenkins_casc_config_template: ""
+
+You can use this variable to specify a Jinja template file to be used to create the Jenkins CasC config file. This option is mutually exclusive to and will override the `jenkins_casc_config_file` variable.
+
+    jenkins_casc_jenkins_home: /var/lib/jenkins
+
+Jenkins home directory. Defaults to `/var/lib/jenkins` which is the default for most distribution and only needs to be changed if you've customized it. This role will create a folder named `casc_configs` in this directory.
+
+
 Dependencies
 ------------
 
