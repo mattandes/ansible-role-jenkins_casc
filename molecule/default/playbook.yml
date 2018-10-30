@@ -8,31 +8,7 @@
       - configuration-as-code-support
 
   pre_tasks:
-    - name: Update apt cache.
-      apt: update_cache=true cache_valid_time=600
-      when: ansible_os_family == 'Debian'
-      changed_when: false
-
-    - name: Install dependencies.
-      apt:
-        default_release: "{{ ansible_distribution_release }}-backports"
-        name:
-          - openjdk-8-jre-headless
-          - ca-certificates-java
-        state: present
-      when: ansible_distribution == "Debian"
-
-    - name: Set the java_packages variable (Debian).
-      set_fact:
-        java_packages:
-          - openjdk-8-jdk
-      when: ansible_distribution == 'Debian'
-
-    - name: Set the java_packages variable (Ubuntu).
-      set_fact:
-        java_packages:
-          - openjdk-8-jdk
-      when: ansible_distribution == 'Ubuntu'
+    - include_tasks: java-8.yml
 
   roles:
     - role: geerlingguy.java
