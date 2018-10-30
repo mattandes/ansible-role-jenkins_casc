@@ -1,0 +1,49 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    jenkins_plugin_timeout: 90
+    jenkins_plugins:
+      - workflow-aggregator
+      - job-dsl
+      - configuration-as-code
+      - configuration-as-code-support
+    jenkins_casc_config_template: files/jenkins.yml.j2
+    jenkins_casc_jobs:
+      - type: url
+        value: https://raw.githubusercontent.com/mattandes/springboot-gs-rest-service/master/jenkins-pipeline/pipeline.groovy
+      - type: script
+        value: freeStyleJob('example') { steps { shell('echo Hello World!!') } }
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.jenkins
+    - role: mattandes.jenkins_casc
+
+  post_tasks:
+    - name: Check if first example job exists
+      uri:
+        url: "http://127.0.0.1:8080/job/springboot-gs-rest-service-build"
+        status_code: 200
+        return_content: false
+      register: result
+      until: result.status == 200
+      retries: 60
+      delay: 1
+
+    - name: Check if second example job exists
+      uri:
+        url: "http://127.0.0.1:8080/job/example"
+        status_code: 200
+        return_content: false
+      register: result
+      until: result.status == 200
+      retries: 60
+      delay: 1
