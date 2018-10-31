@@ -1,2 +1,2 @@
 ---
-jenkins_casc_jenkins_init_file: /etc/default/jenkins
+jenkins_casc_jenkins_env_file: /etc/environment

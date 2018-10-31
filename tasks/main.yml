@@ -30,8 +30,9 @@
   when: jenkins_casc_config_template != ""
   notify: Restart Jenkins
 
-- name: Add CASC_JENKINS_CONFIG environment variable to Jenkins init file
+- name: Add CASC_JENKINS_CONFIG environment variable to Jenkins configuration
   lineinfile:
-    dest: "{{ jenkins_casc_jenkins_init_file }}"
+    dest: "{{ jenkins_casc_jenkins_env_file }}"
     regexp: '^export CASC_JENKINS_CONFIG='
     line: "export CASC_JENKINS_CONFIG={{ jenkins_casc_jenkins_home }}/casc_configs/"
+  notify: Restart Jenkins

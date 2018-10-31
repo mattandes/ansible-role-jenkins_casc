@@ -1,6 +1,8 @@
 Ansible Role: Jenkins-CasC
 =========
 
+[![Build Status](https://travis-ci.org/mattandes/ansible-role-jenkins_casc.svg?branch=master)](https://travis-ci.org/mattandes/ansible-role-jenkins_casc)
+
 Configures the [Jenkins Configuration as Code plugin](https://plugins.jenkins.io/configuration-as-code-support) on a EL 7 system that was preferrably configured with the [geerlingguy.jenkins](https://galaxy.ansible.com/geerlingguy/jenkins) Ansible role. 
 
 Requirements
