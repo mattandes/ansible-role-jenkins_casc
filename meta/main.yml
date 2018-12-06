@@ -2,6 +2,7 @@
 galaxy_info:
   author: Matt Andes
   description: Ansible Role to help configure Jenkins Configuration as Code Plugin
+  company: N/A
   role_name: jenkins_casc
   license: MIT
   min_ansible_version: 2.4
